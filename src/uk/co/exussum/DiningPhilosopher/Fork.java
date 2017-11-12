@@ -3,18 +3,16 @@ package uk.co.exussum.DiningPhilosopher;
 class Fork {
     private boolean used = false;
 
-    boolean isBeingUsed()
+    synchronized void take() throws Exception
     {
-        return used;
-    }
-
-    synchronized void take()
-    {
-        this.used = true;
+        if (used) {
+            throw new Exception("Currently in use");
+        }
+        used = true;
     }
 
     synchronized void putDown()
     {
-        this.used = false;
+        used = false;
     }
 }
